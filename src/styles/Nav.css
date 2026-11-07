@@ -1,0 +1,140 @@
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: var(--color-bg-secondary);
+}
+
+.nav-logo, .notifs, .cta{
+    display: flex;
+    align-items: center;
+}
+
+.panel-left{
+    background-color: var(--color-panel);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+}
+
+.panel-left:hover{
+    background-color: var(--color-panel-hover);
+    transition: 0.2s ease;
+}
+
+.leaderboard{
+    display: flex;
+    gap: 4px;
+    height: 50px;
+    width: auto;
+    background-color: var(--color-panel);
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    padding: 12px 18px 12px 10px;
+    cursor: pointer;
+}
+
+.leaderboard:hover{
+    background-color: var(--color-panel-hover);
+    transition: 0.2s ease;
+}
+
+.leaderboard img{
+    width: 50px;
+    height: 40px;
+    align-self: center;
+}
+
+.leaderboard-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weekly{
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--color-text-muted);
+}
+
+.leaderboard-prize{
+    background: linear-gradient(
+        90deg,
+        #d99b27 0%,
+        #f5d46b 45%,
+        #fff2b0 100%
+      );
+    
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    
+      font-weight: 700;
+}
+
+.leaderboard-prize span{
+    font-weight: 800;
+    font-size: 8px;
+}
+
+.leaderboard-icon{
+    background-color: var(--color-panel);
+    padding: 9px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+}
+
+.leaderboard-icon:hover{
+    background-color: var(--color-panel-hover);
+    transition: 0.2s ease;
+}
+
+.notifs{
+    gap: 8px;
+}
+
+.search, .panel-right{
+    background-color: var(--color-panel);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+}
+
+.search:hover, .panel-right:hover{
+    background-color: var(--color-panel-hover);
+    transition: 0.2s ease;
+}
+
+.cta{
+    gap: 8px;
+}
+
+.btn{
+    background-color: var(--color-primary);
+    color: var(--color-text-dark);
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    font-weight: var(--font-bold);
+    cursor: pointer;
+}
+
+.btn:hover{
+    background-color: var(--color-accent);
+    transition: 0.2s ease;
+}
+
+.login{
+    background-color: var(--color-active);
+    color: var(--color-text);
+}
+
+.login:hover{
+    background-color: var(--color-panel-hover);
+    transition: 0.2s ease;
+}

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+:root {
+    /* Backgrounds */
+    --color-bg: #021014;
+    --color-bg-secondary: #0A1A1F;
+    --color-panel: #0d2a38;
+    --color-active: rgba(9, 102, 125, 0.3);
+    --color-panel-hover: #0d2531;
+    --color-odds: #20313B;
+    --color-input: #0C2531;
+  
+    /* Brand colours */
+    --color-primary: #B5F0EA;
+    --color-accent: #20C5D5;
+    --color-accent-hover: #16AEBE;
+  
+    /* Text */
+    --color-text: #DCE7EA;
+    --color-text-muted: #82949C;
+    --color-text-dark: #021014;
+  
+    /* Borders */
+    --color-border: #193943;
+    --color-border-light: #25434D;
+  
+    /* Status */
+    --color-live: #F02D61;
+    --color-warning: #f4af66;
+    --color-success: #35C98B;
+  
+    /* Typography */
+    --font-primary: 'Inter', sans-serif;
+  
+    /* Font weights */
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+  
+    /* Font sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+  
+    /* Border radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+  
+    /* Shadows */
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+  
