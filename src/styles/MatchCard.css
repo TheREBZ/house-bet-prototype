@@ -1,0 +1,124 @@
+
+.match-card {
+    padding: 16px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s ease;
+  }
+  
+  .match-card:hover {
+    border-color: var(--color-border-light);
+  }
+  
+  .match-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .match-league {
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  
+  .match-time {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+  }
+  
+  .match-card-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 0.8fr);
+    align-items: center;
+    gap: 20px;
+    padding-top: 14px;
+  }
+  
+  .match-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .match-team {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+  
+  .match-team img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  
+  .match-odds {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  
+  .odd-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 52px;
+    padding: 7px 4px;
+    background: var(--color-odds);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .odd-button span {
+    font-size: var(--text-xs);
+  }
+  
+  .odd-button strong {
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  
+  .odd-button:hover {
+    background: var(--color-panel-hover);
+  }
+  
+  .odd-button.selected {
+    background: rgba(32, 197, 213, 0.14);
+    border-color: var(--color-accent);
+  }
+  
+  .odd-button.selected strong {
+    color: var(--color-primary);
+  }
+  
+  @media (max-width: 600px) {
+    .match-card {
+      padding: 13px;
+    }
+  
+    .match-card-body {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+  
+    .match-odds {
+      gap: 6px;
+    }
+  }
+  

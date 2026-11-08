@@ -74,3 +74,43 @@ ol {
 #root {
   min-height: 100vh;
 }
+
+/* GLOBAL PAGE SPACING */
+
+:root {
+  --page-padding: 60px;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding-inline: var(--page-padding);
+}
+
+/* MAIN APP LAYOUT */
+
+.app-layout {
+  display: flex;
+  align-items: flex-start;
+  min-height: calc(100vh - 80px);
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* RESPONSIVE PAGE SPACING */
+
+@media (max-width: 768px) {
+  :root {
+    --page-padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --page-padding: 14px;
+  }
+}
