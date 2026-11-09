@@ -15,7 +15,7 @@ import {
     Flag,
   } from "lucide-react"
   
-  import "../styles/Sidebar.css"
+  import "../styles/SideBar.css"
   
   const Sidebar = () => {
     return (

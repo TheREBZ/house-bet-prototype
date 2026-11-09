@@ -4,6 +4,10 @@
   align-items: center;
   padding: 15px 20px;
   background-color: var(--color-bg-secondary);
+  height: 80px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .nav-logo, .notifs, .cta{
@@ -139,6 +143,12 @@
     transition: 0.2s ease;
 }
 
+.nav-container {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 /* TABLET RESPONSIVENESS */
 
 @media (max-width: 900px) {
@@ -201,8 +211,9 @@
     .leaderboard,
     .leaderboard-icon,
     .panel-right,
-    .login
-    .search {
+    .login,
+    .search,
+    .panel-left {
       display: none;
     }
   

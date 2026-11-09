@@ -32,11 +32,22 @@
   }
   
   .match-card-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(210px, 0.8fr);
-    align-items: center;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     padding-top: 14px;
+  }
+  
+  .match-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .match-odds {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
   }
   
   .match-teams {
