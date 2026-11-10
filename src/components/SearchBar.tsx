@@ -1,7 +1,12 @@
 import { Search } from "lucide-react"
 import "../styles/SearchBar.css"
 
-const SearchBar = () => {
+type SearchBarProps = {
+  value?: string
+  onChange?: (value: string) => void
+}
+
+const SearchBar = ({ value, onChange }: SearchBarProps) => {
   return (
     <div className="home-search">
       <Search size={20} className="search-icon" />
@@ -10,6 +15,8 @@ const SearchBar = () => {
         type="search"
         placeholder="Search teams, players or leagues"
         aria-label="Search teams, players or leagues"
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
       />
     </div>
   )

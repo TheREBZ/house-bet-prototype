@@ -8,6 +8,7 @@ import {
 import SearchBar from "../components/SearchBar"
 import "../styles/Home.css"
 import { Radio } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 const sports = [
   "All Sports",
@@ -19,7 +20,19 @@ const sports = [
   "Volleyball",
 ]
 
+// NEW: where each tab goes ("All Sports" is this page, so it has no entry)
+const sportRoutes: Record<string, string> = {
+  Live: "/live",
+  Football: "/sports/football",
+  Basketball: "/sports/basketball",
+  Tennis: "/sports/tennis",
+  Esports: "/sports/esports",
+  Volleyball: "/sports/volleyball",
+}
+
 const Home = () => {
+  const navigate = useNavigate()
+
   return (
     <div className="home-page">
       <SearchBar />
@@ -28,6 +41,10 @@ const Home = () => {
         {sports.map((sport) => (
           <button
             key={sport}
+            onClick={() => {
+              const path = sportRoutes[sport] // CHANGED
+              if (path) navigate(path)
+            }}
             className={`sport-tab ${sport === "All Sports" ? "active" : ""} ${
               sport === "Live" ? "live-tab" : ""
             }`}
