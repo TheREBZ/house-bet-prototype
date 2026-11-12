@@ -6,6 +6,8 @@ import LeagueGroup from "../components/LeagueGroup"
 import { categories, isCategoryId } from "../data/categoryMatches"
 import { liveLeagues } from "../data/liveMatches"
 import type { MatchDay } from "../data/liveMatches"
+import { LeagueListSkeleton } from "../components/Skeletons"
+import { useSimulatedLoading } from "../hooks/useSimulatedLoading"
 import "../styles/Live.css"
 import "../styles/Category.css"
 
@@ -33,6 +35,7 @@ const CategoryContent = ({ category }: CategoryContentProps) => {
   const navigate = useNavigate()
   const [day, setDay] = useState<DayFilter>("All")
   const [query, setQuery] = useState("")
+  const loading = useSimulatedLoading()
 
   const config = isCategoryId(category) ? categories[category] : undefined
 
@@ -108,20 +111,23 @@ const CategoryContent = ({ category }: CategoryContentProps) => {
         </span>
       </div>
 
-      <div className="live-leagues">
-        {visibleLeagues.length > 0 ? (
-          visibleLeagues.map((league) => (
-            <LeagueGroup key={league.id} league={league} />
-          ))
-        ) : (
-          <p className="live-empty">No matches found.</p>
-        )}
-      </div>
+      {loading ? (
+        <LeagueListSkeleton />
+      ) : (
+        <div className="live-leagues">
+          {visibleLeagues.length > 0 ? (
+            visibleLeagues.map((league) => (
+              <LeagueGroup key={league.id} league={league} />
+            ))
+          ) : (
+            <p className="live-empty">No matches found.</p>
+          )}
+        </div>
+      )}
     </div>
   )
 }
 
-// The key resets the filters whenever you switch to a different category
 const Category = () => {
   const { category } = useParams()
   return <CategoryContent key={category} category={category} />

@@ -5,17 +5,17 @@ import LiveMatchRow from "./LiveMatchRow"
 
 type LeagueGroupProps = {
   league: Omit<LiveLeague, "sport">
-  previewCount?: number // NEW: collapse to this many rows with a "Show all" toggle
-  liveDot?: boolean // NEW: red dot next to the name when the league has live matches
+  previewCount?: number 
+  liveDot?: boolean
 }
 
 const LeagueGroup = ({ league, previewCount, liveDot = true }: LeagueGroupProps) => {
   const [isFavourite, setIsFavourite] = useState(Boolean(league.favourite))
-  const [expanded, setExpanded] = useState(false) // NEW
+  const [expanded, setExpanded] = useState(false)
   const count = league.matches.length
   const hasLive = league.matches.some((m) => (m.status ?? "live") === "live")
 
-  const collapsible = previewCount !== undefined && count > previewCount // NEW
+  const collapsible = previewCount !== undefined && count > previewCount
   const shownMatches =
     collapsible && !expanded ? league.matches.slice(0, previewCount) : league.matches
 
@@ -56,7 +56,7 @@ const LeagueGroup = ({ league, previewCount, liveDot = true }: LeagueGroupProps)
       </header>
 
       {shownMatches.map((match) => (
-        <LiveMatchRow key={match.id} match={match} />
+        <LiveMatchRow key={match.id} match={match} marketName={league.marketName} />
       ))}
     </section>
   )

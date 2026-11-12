@@ -9,6 +9,8 @@ import SearchBar from "../components/SearchBar"
 import "../styles/Home.css"
 import { Radio } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { HomeSkeleton } from "../components/Skeletons"
+import { useSimulatedLoading } from "../hooks/useSimulatedLoading"
 
 const sports = [
   "All Sports",
@@ -32,6 +34,9 @@ const sportRoutes: Record<string, string> = {
 
 const Home = () => {
   const navigate = useNavigate()
+  const loading = useSimulatedLoading() // NEW
+
+  if (loading) return <HomeSkeleton /> // NEW
 
   return (
     <div className="home-page">

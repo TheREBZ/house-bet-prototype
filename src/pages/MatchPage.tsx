@@ -10,6 +10,9 @@ import {
 } from "lucide-react"
 import { getFootballMatchById } from "../data/footballMatches"
 import TeamBadge from "../components/TeamBadge"
+import { makeSelectionId, useBetSlip } from "../context/BetSlipContext"
+import { MatchPageSkeleton } from "../components/Skeletons"
+import { useSimulatedLoading } from "../hooks/useSimulatedLoading"
 import "../styles/MatchPage.css"
 
 type MarketOption = {
@@ -35,10 +38,11 @@ const MatchPage = () => {
 
   const [activeCategory, setActiveCategory] = useState("popular")
   const [search, setSearch] = useState("")
-  const [selectedOdds, setSelectedOdds] = useState<string[]>([])
+  const { selections, addSelection } = useBetSlip()
   const [collapsedSections, setCollapsedSections] = useState<string[]>([])
   const [following, setFollowing] = useState(false)
   const [favourite, setFavourite] = useState(false)
+  const loading = useSimulatedLoading(id)
 
   if (!matchData) {
     return (
@@ -49,6 +53,7 @@ const MatchPage = () => {
       </div>
     )
   }
+  if (loading) return <MatchPageSkeleton />
 
   const { competition, match, homeTeam, awayTeam } = matchData
 
@@ -65,9 +70,9 @@ const MatchPage = () => {
         {
           title: "Match result",
           options: [
-            { label: homeTeam.name, odds: match.odds[0].toFixed(2) },
+            { label: homeTeam.short, odds: match.odds[0].toFixed(2) },
             { label: "Draw", odds: match.odds[1].toFixed(2) },
-            { label: awayTeam.name, odds: match.odds[2].toFixed(2) },
+            { label: awayTeam.short, odds: match.odds[2].toFixed(2) },
           ],
         },
         {
@@ -336,12 +341,20 @@ const MatchPage = () => {
             section.options.length > 0,
         )
 
-  const toggleOdd = (selection: string) => {
-    setSelectedOdds((current) =>
-      current.includes(selection)
-        ? current.filter((item) => item !== selection)
-        : [...current, selection],
-    )
+  const toggleOdd = (
+    market: string,
+    selection: string,
+    odds: string
+  ) => {
+    addSelection({
+      id: makeSelectionId(`${homeTeam.name} vs ${awayTeam.name}`, market, selection),
+      matchId: match.id,
+      matchName: `${homeTeam.name} vs ${awayTeam.name}`,
+      market,
+      selection,
+      odds: Number(odds),
+      stake: "",
+    })
   }
 
   const toggleSection = (title: string) => {
@@ -492,8 +505,15 @@ const MatchPage = () => {
                 {!collapsed && (
                   <div className="market-options">
                     {section.options.map((option) => {
-                      const selection = `${section.title}-${option.label}`
-                      const selected = selectedOdds.includes(selection)
+                      const selectionId = makeSelectionId(
+                        `${homeTeam.name} vs ${awayTeam.name}`,
+                        section.title,
+                        option.label,
+                      )
+
+                      const selected = selections.some(
+                        (item) => item.id === selectionId
+                      )
 
                       return (
                         <button
@@ -501,7 +521,9 @@ const MatchPage = () => {
                           className={`market-option ${
                             selected ? "selected" : ""
                           }`}
-                          onClick={() => toggleOdd(selection)}
+                          onClick={() =>
+                            toggleOdd(section.title, option.label, option.odds)
+                          }
                         >
                           <span>{option.label}</span>
                           <strong>{option.odds}</strong>

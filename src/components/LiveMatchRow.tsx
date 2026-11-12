@@ -1,34 +1,49 @@
-
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ChevronRight, Lock } from "lucide-react"
 import type { LiveMatch } from "../data/liveMatches"
+import { findFootballMatchByTeams } from "../data/footballMatches"
+import { makeSelectionId, useBetSlip } from "../context/BetSlipContext"
 import TeamBadge from "./TeamBadge"
 
 type LiveMatchRowProps = {
   match: LiveMatch
+  marketName: string // e.g. "Match result", shown in the bet slip
 }
 
-const LiveMatchRow = ({ match }: LiveMatchRowProps) => {
-  const [selectedOdd, setSelectedOdd] = useState<string | null>(null)
+const LiveMatchRow = ({ match, marketName }: LiveMatchRowProps) => {
   const navigate = useNavigate()
+  const { selections, addSelection } = useBetSlip()
 
   // Matches are live unless they say otherwise
   const isLive = (match.status ?? "live") === "live"
+  const matchName = `${match.homeTeam} vs ${match.awayTeam}`
 
-  const toggleOdd = (label: string) =>
-    setSelectedOdd((current) => (current === label ? null : label))
+  // Only football matches have a detail page for now
+  const details = findFootballMatchByTeams(match.homeTeam, match.awayTeam)
+  const openMatch = () => {
+    if (details) navigate(`/match/${details.id}`)
+  }
 
-  const openMatch = () => navigate(`/match/${match.id}`)
+  const pickOdd = (selection: string, value: string) =>
+    addSelection({
+      id: makeSelectionId(matchName, marketName, selection),
+      matchId: match.id,
+      matchName,
+      market: marketName,
+      selection,
+      odds: Number(value),
+      stake: "",
+    })
 
   return (
     <div
       className="live-row live-grid"
+      style={{ cursor: details ? "pointer" : "default" }}
       onClick={openMatch}
-      role="link"
-      tabIndex={0}
+      role={details ? "link" : undefined}
+      tabIndex={details ? 0 : undefined}
       onKeyDown={(e) => {
-        if (e.key === "Enter") openMatch()
+        if (details && e.key === "Enter" && e.target === e.currentTarget) openMatch()
       }}
     >
       <div className="live-status">
@@ -73,20 +88,26 @@ const LiveMatchRow = ({ match }: LiveMatchRowProps) => {
             gridTemplateColumns: `repeat(${match.odds.length}, minmax(0, 1fr))`,
           }}
         >
-          {match.odds.map((odd) => (
-            <button
-              key={odd.label}
-              className={`live-odd ${selectedOdd === odd.label ? "selected" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation()
-                toggleOdd(odd.label)
-              }}
-              aria-pressed={selectedOdd === odd.label}
-            >
-              <span>{odd.label}</span>
-              <strong>{odd.value}</strong>
-            </button>
-          ))}
+          {match.odds.map((odd) => {
+            const selected = selections.some(
+              (item) => item.id === makeSelectionId(matchName, marketName, odd.label),
+            )
+
+            return (
+              <button
+                key={odd.label}
+                className={`live-odd ${selected ? "selected" : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  pickOdd(odd.label, odd.value)
+                }}
+                aria-pressed={selected}
+              >
+                <span>{odd.label}</span>
+                <strong>{odd.value}</strong>
+              </button>
+            )
+          })}
         </div>
       ) : (
         <div className="live-suspended">

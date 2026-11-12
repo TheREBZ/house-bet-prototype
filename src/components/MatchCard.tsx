@@ -1,6 +1,5 @@
-
-import { useState } from "react"
 import type { Match } from "../data/matches"
+import { makeSelectionId, useBetSlip } from "../context/BetSlipContext"
 import "../styles/MatchCard.css"
 
 type MatchCardProps = {
@@ -8,12 +7,15 @@ type MatchCardProps = {
 }
 
 const MatchCard = ({ match }: MatchCardProps) => {
-  const [selectedOdd, setSelectedOdd] = useState<string | null>(null)
+  const { selections, addSelection } = useBetSlip()
+
+  const matchName = `${match.homeTeam} vs ${match.awayTeam}`
+  const market = "Match result"
 
   const odds = [
-    { label: "1", value: match.homeOdds },
-    { label: "X", value: match.drawOdds },
-    { label: "2", value: match.awayOdds },
+    { label: "1", selection: match.homeTeam, value: match.homeOdds },
+    { label: "X", selection: "Draw", value: match.drawOdds },
+    { label: "2", selection: match.awayTeam, value: match.awayOdds },
   ]
 
   return (
@@ -37,19 +39,32 @@ const MatchCard = ({ match }: MatchCardProps) => {
         </div>
 
         <div className="match-odds">
-          {odds.map((odd) => (
-            <button
-              key={odd.label}
-              className={`odd-button ${
-                selectedOdd === odd.label ? "selected" : ""
-              }`}
-              onClick={() => setSelectedOdd(odd.label)}
-              aria-pressed={selectedOdd === odd.label}
-            >
-              <span>{odd.label}</span>
-              <strong>{odd.value}</strong>
-            </button>
-          ))}
+          {odds.map((odd) => {
+            const id = makeSelectionId(matchName, market, odd.selection)
+            const selected = selections.some((item) => item.id === id)
+
+            return (
+              <button
+                key={odd.label}
+                className={`odd-button ${selected ? "selected" : ""}`}
+                onClick={() =>
+                  addSelection({
+                    id,
+                    matchId: match.id,
+                    matchName,
+                    market,
+                    selection: odd.selection,
+                    odds: Number(odd.value),
+                    stake: "",
+                  })
+                }
+                aria-pressed={selected}
+              >
+                <span>{odd.label}</span>
+                <strong>{odd.value}</strong>
+              </button>
+            )
+          })}
         </div>
       </div>
     </article>

@@ -6,12 +6,16 @@ import LiveSportTabs from "../components/LiveSportTabs"
 import type { SportFilter } from "../components/LiveSportTabs"
 import LeagueGroup from "../components/LeagueGroup"
 import { liveLeagues } from "../data/liveMatches"
+
+import { LeagueListSkeleton } from "../components/Skeletons"
+import { useSimulatedLoading } from "../hooks/useSimulatedLoading"
 import "../styles/Live.css"
 
 const Live = () => {
   const navigate = useNavigate()
   const [sport, setSport] = useState<SportFilter>("all")
   const [query, setQuery] = useState("")
+  const loading = useSimulatedLoading()
 
   // Tab counts come from the data, so they never drift out of sync
   const counts = useMemo(() => {
@@ -62,15 +66,19 @@ const Live = () => {
 
       <LiveSportTabs active={sport} counts={counts} onChange={setSport} />
 
-      <div className="live-leagues">
-        {visibleLeagues.length > 0 ? (
-          visibleLeagues.map((league) => (
-            <LeagueGroup key={league.id} league={league} />
-          ))
-        ) : (
-          <p className="live-empty">No live matches found.</p>
-        )}
-      </div>
+      {loading ? (
+        <LeagueListSkeleton />
+      ) : (
+        <div className="live-leagues">
+          {visibleLeagues.length > 0 ? (
+            visibleLeagues.map((league) => (
+              <LeagueGroup key={league.id} league={league} />
+            ))
+          ) : (
+            <p className="live-empty">No live matches found.</p>
+          )}
+        </div>
+      )}
     </div>
   )
 }

@@ -281,18 +281,29 @@ export const toLiveMatch = (m: FootballMatch, market: MarketId): LiveMatch => {
   }
 }
 export const getFootballMatchById = (id: number) => {
-    for (const competition of competitions) {
-      const match = competition.matches.find((m) => m.id === id)
-  
-      if (match) {
-        return {
-          competition,
-          match,
-          homeTeam: teams[match.home],
-          awayTeam: teams[match.away],
-        }
+  for (const competition of competitions) {
+    const match = competition.matches.find((m) => m.id === id)
+
+    if (match) {
+      return {
+        competition,
+        match,
+        homeTeam: teams[match.home],
+        awayTeam: teams[match.away],
       }
     }
-  
-    return undefined
   }
+
+  return undefined
+}
+
+// NEW: find a football match by its team names
+export const findFootballMatchByTeams = (homeName: string, awayName: string) => {
+  for (const competition of competitions) {
+    const match = competition.matches.find(
+      (m) => teams[m.home].name === homeName && teams[m.away].name === awayName,
+    )
+    if (match) return match
+  }
+  return undefined
+}

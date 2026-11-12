@@ -11,6 +11,8 @@ import {
   sortMatches,
   toLiveMatch,
 } from "../data/footballMatches"
+import { LeagueListSkeleton } from "../components/Skeletons"
+import { useSimulatedLoading } from "../hooks/useSimulatedLoading"
 import type { MarketId } from "../data/footballMatches"
 import "../styles/Live.css"
 import "../styles/Football.css"
@@ -44,6 +46,7 @@ const Football = () => {
   const [market, setMarket] = useState<MarketId>("match-result")
   const [competition, setCompetition] = useState("all")
   const [query, setQuery] = useState("")
+  const loading = useSimulatedLoading()
 
   const visibleLeagues = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -149,21 +152,25 @@ const Football = () => {
         />
       </div>
 
-      {/* LEAGUES */}
-      <div className="live-leagues">
-        {visibleLeagues.length > 0 ? (
-          visibleLeagues.map((league) => (
-            <LeagueGroup
-              key={league.id}
-              league={league}
-              previewCount={PREVIEW_COUNT}
-              liveDot={false}
-            />
-          ))
-        ) : (
-          <p className="live-empty">No matches found.</p>
-        )}
-      </div>
+           {/* LEAGUES */}
+           {loading ? (
+        <LeagueListSkeleton />
+      ) : (
+        <div className="live-leagues">
+          {visibleLeagues.length > 0 ? (
+            visibleLeagues.map((league) => (
+              <LeagueGroup
+                key={league.id}
+                league={league}
+                previewCount={PREVIEW_COUNT}
+                liveDot={false}
+              />
+            ))
+          ) : (
+            <p className="live-empty">No matches found.</p>
+          )}
+        </div>
+      )}
     </div>
   )
 }

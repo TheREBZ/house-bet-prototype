@@ -1,7 +1,9 @@
 import { PanelLeft, Crown, Search, PanelRight } from "lucide-react"
+import { useBetSlip } from "../context/BetSlipContext"
 import "../styles/Nav.css"
 
 const Nav = () => {
+    const { toggleBetSlip } = useBetSlip()
   return (
     <nav className="nav-container">
         <div className="nav-logo">
@@ -28,9 +30,13 @@ const Nav = () => {
             <div className="search">
                 <Search size={20} />
             </div>
-            <div className="panel-right">
+            <button
+                className="panel-right"
+                onClick={toggleBetSlip}
+                aria-label="Toggle bet slip"
+                >
                 <PanelRight size={20} />
-            </div>
+            </button>
             <a href="">
                 <button className="btn login">Log In</button>
             </a>

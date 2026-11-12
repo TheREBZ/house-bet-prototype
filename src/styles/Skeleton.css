@@ -1,0 +1,108 @@
+.skeleton {
+    display: block;
+    max-width: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--color-panel-hover) 0%,
+      var(--color-border) 50%,
+      var(--color-panel-hover) 100%
+    );
+    background-size: 200% 100%;
+    border-radius: 6px;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  }
+  
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+    }
+  }
+  
+  /* small layout helpers */
+  
+  .skeleton-right {
+    justify-self: end;
+  }
+  
+  .skeleton-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .skeleton-pill-row {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0 18px;
+    overflow: hidden;
+  }
+  
+  .skeleton-odds-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  
+  /* match page */
+  
+  .skeleton-hero {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 28px 24px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+  
+  .skeleton-team {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  .skeleton-team:last-child {
+    justify-content: flex-end;
+  }
+  
+  .skeleton-center {
+    align-items: center;
+  }
+  
+  .skeleton-market {
+    display: grid;
+    gap: 14px;
+    margin-top: 12px;
+    padding: 16px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+  
+  /* the "+115" column and "Show all" link don't exist on small screens */
+  @media (max-width: 900px) {
+    .skeleton-more {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .skeleton-hero {
+      padding: 18px 14px;
+    }
+  
+    .skeleton-team {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
