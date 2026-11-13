@@ -15,7 +15,6 @@ export type Category = {
   leagues: CategoryLeague[]
 }
 
-/* ---------- helpers to keep the data readable ---------- */
 
 const flag = (code: string) => `https://flagcdn.com/w40/${code}.png`
 const soccer = (id: number) =>

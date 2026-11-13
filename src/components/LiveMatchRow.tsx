@@ -7,18 +7,16 @@ import TeamBadge from "./TeamBadge"
 
 type LiveMatchRowProps = {
   match: LiveMatch
-  marketName: string // e.g. "Match result", shown in the bet slip
+  marketName: string 
 }
 
 const LiveMatchRow = ({ match, marketName }: LiveMatchRowProps) => {
   const navigate = useNavigate()
   const { selections, addSelection } = useBetSlip()
 
-  // Matches are live unless they say otherwise
   const isLive = (match.status ?? "live") === "live"
   const matchName = `${match.homeTeam} vs ${match.awayTeam}`
 
-  // Only football matches have a detail page for now
   const details = findFootballMatchByTeams(match.homeTeam, match.awayTeam)
   const openMatch = () => {
     if (details) navigate(`/match/${details.id}`)

@@ -2,9 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/house-ico.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>housebet-comp</title>
+    <title>housebet-comp-page</title>
+    <script>
+      try {
+        var savedTheme = localStorage.getItem("hb-theme")
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.setAttribute("data-theme", savedTheme)
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

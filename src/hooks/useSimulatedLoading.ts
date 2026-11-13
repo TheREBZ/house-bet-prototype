@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-
+// simulated delayed loading
 export const useSimulatedLoading = (key = "default", delay = 600) => {
   const [loadedKey, setLoadedKey] = useState<string | null>(null)
 

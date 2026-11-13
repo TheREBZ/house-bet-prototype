@@ -55,4 +55,35 @@
     /* Shadows */
     --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
-  
+
+:root[data-theme="light"] {
+    /* Backgrounds */
+    --color-bg: #B5F0EA;
+    --color-bg-secondary: #DDF8F4;
+    --color-panel: #EEFCFA;
+    --color-active: rgba(8, 127, 142, 0.16);
+    --color-panel-hover: #C6F1EC;
+    --color-odds: #F4FFFD;
+    --color-input: #EFFCFB;
+
+    /* Brand colours */
+    --color-primary: #06505C;
+    --color-accent: #0A7F8E;
+    --color-accent-hover: #086B78;
+
+    /* Text */
+    --color-text: #052229;
+    --color-text-muted: #3C646B;
+    --color-text-dark: #FFFFFF; 
+    /* Borders */
+    --color-border: #8FD0C9;
+    --color-border-light: #72BFB7;
+
+    /* Status */
+    --color-live: #D61F55;
+    --color-warning: #B4630A;
+    --color-success: #11855A;
+
+    /* Shadows */
+    --shadow-card: 0 4px 16px rgba(6, 80, 92, 0.12);
+}

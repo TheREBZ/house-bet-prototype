@@ -5,7 +5,6 @@ type TeamBadgeProps = {
   name: string
 }
 
-// Shows the team logo, or a letter badge if there is no logo / it fails to load
 const TeamBadge = ({ src, name }: TeamBadgeProps) => {
   const [failed, setFailed] = useState(false)
 

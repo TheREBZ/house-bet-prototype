@@ -94,7 +94,6 @@ const Footer = () => {
         </button>
       </div>
 
-      {/* LINK COLUMNS */}
       <div className="footer-columns">
         {columns.map((column) => (
           <div className="footer-column" key={column.title}>
@@ -114,7 +113,6 @@ const Footer = () => {
         ))}
       </div>
 
-      {/* COMMUNITY + TRUST BADGES */}
       <div className="footer-community">
         <div className="footer-community-left">
           <span className="footer-community-label">Our Community</span>
@@ -153,7 +151,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* LEGAL TEXT */}
       <div className="footer-legal">
         <p>
           Housebets is operated by Example Gaming Ltd. (Reg. No. 000000),

@@ -87,9 +87,7 @@
     color: var(--color-primary);
     font-weight: var(--font-semibold);
   }
-  
-  /* SHARED GRID: header and rows use the same columns so "Match result" lines up with the odds */
-  
+    
   .live-grid {
     display: grid;
     grid-template-columns: 84px minmax(0, 1fr) 36px minmax(0, 1.7fr) 72px;
@@ -116,7 +114,7 @@
     padding: 12px 14px;
   }
   
-  /* title spans the status + teams + score columns */
+  /* title + teams + score columns */
   .league-title {
     grid-column: 1 / 4;
     display: flex;

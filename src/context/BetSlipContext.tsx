@@ -1,6 +1,7 @@
-
 import { createContext, useContext, useState } from "react"
 import type { ReactNode } from "react"
+import { getSportForMatch, seedBets } from "../data/betHistory"
+import type { PlacedBet } from "../data/betHistory"
 
 export type BetSelection = {
   id: string
@@ -11,11 +12,12 @@ export type BetSelection = {
   odds: number
   stake: string
 }
+
 export const makeSelectionId = (
-    matchName: string,
-    market: string,
-    selection: string,
-  ) => `${matchName}|${market}|${selection}`
+  matchName: string,
+  market: string,
+  selection: string,
+) => `${matchName}|${market}|${selection}`
 
 type BetSlipContextType = {
   selections: BetSelection[]
@@ -23,39 +25,38 @@ type BetSlipContextType = {
   removeSelection: (id: string) => void
   updateStake: (id: string, stake: string) => void
   clearSelections: () => void
+  placedBets: PlacedBet[] 
+  placeBets: (selections: BetSelection[]) => void 
   isOpen: boolean
-    setBetSlipOpen: (open: boolean) => void
-    toggleBetSlip: () => void
+  setBetSlipOpen: (open: boolean) => void
+  toggleBetSlip: () => void
 }
 
-const BetSlipContext = createContext<BetSlipContextType | undefined>(
-  undefined
-)
+const BetSlipContext = createContext<BetSlipContextType | undefined>(undefined)
 
 type BetSlipProviderProps = {
   children: ReactNode
 }
 
 export const BetSlipProvider = ({ children }: BetSlipProviderProps) => {
-
-    const [isOpen, setIsOpen] = useState(
-        () => window.matchMedia("(min-width: 769px)").matches,
-      )
-
-    const setBetSlipOpen = (open: boolean) => {
-    setIsOpen(open)
-    }
-
-    const toggleBetSlip = () => {
-    setIsOpen((current) => !current)
-    }
+  // Open by default on desktop, collapsed on mobile 
+  const [isOpen, setIsOpen] = useState(
+    () => window.matchMedia("(min-width: 769px)").matches,
+  )
   const [selections, setSelections] = useState<BetSelection[]>([])
+  const [placedBets, setPlacedBets] = useState<PlacedBet[]>(seedBets) // NEW
+
+  const setBetSlipOpen = (open: boolean) => {
+    setIsOpen(open)
+  }
+
+  const toggleBetSlip = () => {
+    setIsOpen((current) => !current)
+  }
 
   const addSelection = (selection: BetSelection) => {
     setSelections((current) => {
-      const alreadySelected = current.some(
-        (item) => item.id === selection.id
-      )
+      const alreadySelected = current.some((item) => item.id === selection.id)
 
       if (alreadySelected) {
         return current.filter((item) => item.id !== selection.id)
@@ -66,21 +67,35 @@ export const BetSlipProvider = ({ children }: BetSlipProviderProps) => {
   }
 
   const removeSelection = (id: string) => {
-    setSelections((current) =>
-      current.filter((item) => item.id !== id)
-    )
+    setSelections((current) => current.filter((item) => item.id !== id))
   }
 
   const updateStake = (id: string, stake: string) => {
     setSelections((current) =>
-      current.map((item) =>
-        item.id === id ? { ...item, stake } : item
-      )
+      current.map((item) => (item.id === id ? { ...item, stake } : item)),
     )
   }
 
   const clearSelections = () => {
     setSelections([])
+  }
+
+  const placeBets = (toPlace: BetSelection[]) => {
+    const now = Date.now()
+
+    const newBets: PlacedBet[] = toPlace.map((item, index) => ({
+      id: `${now}-${index}`,
+      placedAt: now,
+      matchName: item.matchName,
+      market: item.market,
+      selection: item.selection,
+      odds: item.odds,
+      stake: Number(item.stake),
+      status: "open",
+      sport: getSportForMatch(item.matchName),
+    }))
+
+    setPlacedBets((current) => [...newBets, ...current])
   }
 
   return (
@@ -91,6 +106,8 @@ export const BetSlipProvider = ({ children }: BetSlipProviderProps) => {
         removeSelection,
         updateStake,
         clearSelections,
+        placedBets,
+        placeBets,
         isOpen,
         setBetSlipOpen,
         toggleBetSlip,
@@ -105,9 +122,7 @@ export const useBetSlip = () => {
   const context = useContext(BetSlipContext)
 
   if (!context) {
-    throw new Error(
-      "useBetSlip must be used inside a BetSlipProvider"
-    )
+    throw new Error("useBetSlip must be used inside a BetSlipProvider")
   }
 
   return context

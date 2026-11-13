@@ -1,0 +1,84 @@
+:root {
+    color-scheme: dark;
+  }
+  
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+  
+  html {
+    background-color: var(--color-bg);
+  }
+  
+  
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease !important;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    html.theme-transition,
+    html.theme-transition *,
+    html.theme-transition *::before,
+    html.theme-transition *::after {
+      transition: none !important;
+    }
+  }
+  
+  
+  :root[data-theme="light"] .logo img,
+  :root[data-theme="light"] .footer-logo img {
+    filter: invert(1) hue-rotate(180deg);
+  }
+  
+  :root[data-theme="light"] img[src$="/epl.svg"],
+  :root[data-theme="light"] img[src$="/ucl.svg"] {
+    filter: brightness(0);
+  }
+  
+  /* Footer */
+  :root[data-theme="light"] .site-footer {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      var(--color-bg-secondary) 45%
+    );
+  }
+  
+  :root[data-theme="light"] .match-favourite.active {
+    color: #9a6b00;
+  }
+  
+  :root[data-theme="light"] .match-follow.following {
+    color: #9a6b00;
+    border-color: #c79a2e;
+  }
+  
+  :root[data-theme="light"] .leaderboard-prize {
+    background-image: linear-gradient(
+      90deg,
+      #8a5a00 0%,
+      #b57a05 50%,
+      #d99b27 100%
+    );
+  }
+  
+  /* My bets: active tab */
+  :root[data-theme="light"] .mb-tab.active {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  
+  :root[data-theme="light"] .mb-custom-range input {
+    color-scheme: light;
+  }
+  
+  :root[data-theme="light"] .bet-slip-backdrop,
+  :root[data-theme="light"] .nav-sheet-backdrop {
+    background: rgba(181, 240, 234, 0.55);
+  }

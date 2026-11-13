@@ -1,49 +1,236 @@
-
 .bottom-nav {
     display: none;
+  }
+  
+  .nav-sheet,
+  .nav-sheet-backdrop {
+    display: none;
+  }
+  
+  @keyframes nav-sheet-up {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
     }
-    
-    @media (max-width: 768px) {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @media (max-width: 768px) {
     .bottom-nav {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        align-items: center;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        min-height: 68px;
-        padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-        background-color: var(--color-bg-secondary);
-        border-top: 1px solid var(--color-border);
-        z-index: 200;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      min-height: 68px;
+      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      background-color: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border);
+      z-index: 200;
     }
-    
+  
     .bottom-nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        padding: 5px 2px;
-        border: none;
-        background: transparent;
-        color: var(--color-text-muted);
-        font-size: 10px;
-        cursor: pointer;
-        transition: color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 5px 2px;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      font-size: 10px;
+      cursor: pointer;
+      transition: color 0.2s ease;
     }
-    
+  
     .bottom-nav-item svg {
-        flex-shrink: 0;
+      flex-shrink: 0;
     }
-    
+  
     .bottom-nav-item.active {
-        color: var(--color-primary);
+      color: var(--color-primary);
     }
-    
+  
     .bottom-nav-item:hover {
-        color: var(--color-text);
+      color: var(--color-text);
     }
+  
+    .nav-sheet-backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 180;
+      background: rgba(2, 16, 20, 0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
     }
-    
+  
+    /* SHEET */
+    .nav-sheet {
+      display: block;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: calc(64px + env(safe-area-inset-bottom));
+      z-index: 190;
+      max-height: min(72vh, 560px);
+      padding: 16px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      background: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border-light);
+      border-radius: 16px 16px 0 0;
+      animation: nav-sheet-up 0.22s ease-out;
+    }
+  
+    .nav-sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+  
+    .nav-sheet-header h2 {
+      color: var(--color-text);
+      font-size: 15px;
+      font-weight: 600;
+    }
+  
+    .nav-sheet-close {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      color: var(--color-text-muted);
+      cursor: pointer;
+    }
+  
+    /* page links */
+    .nav-sheet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+  
+    .nav-sheet-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      padding: 12px;
+      background: var(--color-panel-hover);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      color: var(--color-text);
+      font-size: 13px;
+      font-weight: 500;
+      transition: 0.2s ease;
+    }
+  
+    .nav-sheet-link svg {
+      flex-shrink: 0;
+      color: var(--color-text-muted);
+    }
+  
+    .nav-sheet-link.active {
+      background: var(--color-active);
+      border-color: var(--color-accent);
+      color: var(--color-primary);
+    }
+  
+    .nav-sheet-link.active svg {
+      color: var(--color-primary);
+    }
+  
+    .nav-sheet-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 10px 12px;
+      border: 1px solid var(--color-border-light);
+      border-radius: 5px;
+      color: var(--color-text-muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+  
+    .nav-sheet-note svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--color-accent);
+    }
+  
+    /* "not part of the demo" card */
+    .nav-sheet-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 6px 2px;
+      text-align: center;
+    }
+  
+    .nav-sheet-placeholder-icon {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 4px;
+      background: var(--color-active);
+      border-radius: 50%;
+      color: var(--color-primary);
+    }
+  
+    .nav-sheet-placeholder h3 {
+      color: var(--color-text);
+      font-size: 14px;
+      font-weight: 600;
+    }
+  
+    .nav-sheet-placeholder p {
+      max-width: 280px;
+      color: var(--color-text-muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  
+    .nav-sheet-primary {
+      width: 100%;
+      margin-top: 8px;
+      padding: 12px;
+      background: var(--color-accent);
+      border: none;
+      border-radius: 10px;
+      color: var(--color-text-dark);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  
+    .nav-sheet-secondary {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      color: var(--color-primary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .nav-sheet {
+      animation: none;
+    }
+  }

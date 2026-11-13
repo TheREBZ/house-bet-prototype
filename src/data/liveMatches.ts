@@ -17,11 +17,11 @@ export type LiveMatch = {
     awayTeam: string
     homeLogo?: string
     awayLogo?: string
-    homeScore?: number //
-    awayScore?: number // optional
-    clock: string // live: "52'", "HT"... / upcoming: kick-off time "17:30"
+    homeScore?: number 
+    awayScore?: number
+    clock: string 
     status?: "live" | "upcoming" 
-    day?: string // "Today" | "Tomorrow" | "Weekend", or a date label like "Tue, Nov 10"
+    day?: string 
     odds: Odd[] | null 
     moreMarkets: number
 }

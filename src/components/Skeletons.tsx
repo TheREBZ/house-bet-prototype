@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react"
 import "../styles/Skeleton.css"
 
-/* ---------- the basic building block ---------- */
 
 type SkeletonProps = {
   width?: number | string
@@ -178,7 +177,6 @@ export const HomeSkeleton = () => (
         </div>
       </section>
 
-      {/* upcoming events */}
       <section className="home-section">
         <div className="section-heading">
           <Skeleton width={140} height={18} />
@@ -253,5 +251,35 @@ export const MatchPageSkeleton = () => (
         </div>
       </div>
     ))}
+  </div>
+)
+/* ---------- My bets ---------- */
+
+export const MyBetsSkeleton = () => (
+  <div
+    className="live-page"
+    role="status"
+    aria-busy="true"
+    aria-label="Loading bets"
+  >
+    <div className="skeleton-pill-row" style={{ marginTop: 0 }}>
+      <Skeleton width={40} height={40} radius={10} />
+      <Skeleton width={100} height={40} radius={10} />
+      <Skeleton width={110} height={14} style={{ alignSelf: "center" }} />
+    </div>
+
+    <Skeleton width={300} height={52} radius={14} />
+
+    <div className="skeleton-pill-row">
+      {Array.from({ length: 5 }, (_, i) => (
+        <Skeleton key={i} width={80} height={32} radius={30} />
+      ))}
+    </div>
+
+    <div className="skeleton-market" style={{ gap: 12, marginTop: 0 }}>
+      {[0, 1, 2].map((n) => (
+        <Skeleton key={n} height={52} radius={10} />
+      ))}
+    </div>
   </div>
 )

@@ -1,6 +1,5 @@
 import type { LiveMatch, Odd } from "./liveMatches"
 
-/* ---------- teams (one place for names, short names and logos) ---------- */
 
 type Team = {
   name: string
@@ -68,7 +67,6 @@ const teams = {
 
 type TeamKey = keyof typeof teams
 
-/* ---------- types ---------- */
 
 export type MarketId = "match-result" | "double-chance" | "over-under" | "btts"
 
@@ -83,11 +81,11 @@ export type FootballMatch = {
   id: number
   home: TeamKey
   away: TeamKey
-  odds: [number, number, number] // 1 / X / 2 decimal odds
-  goals: number // 0 to 1: how goal-heavy we expect it to be (drives the other markets)
-  more: number // number of extra markets
+  odds: [number, number, number] 
+  goals: number 
+  more: number 
   live?: { clock: string; score: [number, number] }
-  kickoff?: { day: number; time: string } // day = days from today
+  kickoff?: { day: number; time: string } 
   suspended?: boolean
 }
 
@@ -99,7 +97,6 @@ export type FootballCompetition = {
   matches: FootballMatch[]
 }
 
-/* ---------- small helpers to keep the data below readable ---------- */
 
 const live = (
   clock: string,
@@ -114,7 +111,6 @@ const ko = (day: number, time: string): FootballMatch["kickoff"] => ({
 
 const flag = (code: string) => `https://flagcdn.com/w40/${code}.png`
 
-/* ---------- data ---------- */
 
 export const competitions: FootballCompetition[] = [
   {
@@ -186,14 +182,12 @@ export const competitions: FootballCompetition[] = [
   },
 ]
 
-/* ---------- helpers used by the page ---------- */
 
 export const isLiveMatch = (m: FootballMatch) => m.live !== undefined
 
 const kickoffKey = (m: FootballMatch) =>
   m.kickoff ? m.kickoff.day * 10000 + Number(m.kickoff.time.replace(":", "")) : 0
 
-// Live matches first, then by kick-off
 export const sortMatches = (matches: FootballMatch[]) =>
   [...matches].sort((a, b) => {
     const liveDiff = Number(isLiveMatch(b)) - Number(isLiveMatch(a))
@@ -211,7 +205,6 @@ const dateLabel = (daysFromToday: number) => {
   })
 }
 
-// Turn a probability into odds with a bit of "bookmaker margin"
 const MARGIN = 0.94
 const price = (probability: number) =>
   Math.max(1.01, MARGIN / probability).toFixed(2)
@@ -260,7 +253,6 @@ const buildOdds = (m: FootballMatch, market: MarketId): Odd[] => {
   }
 }
 
-// Convert our football data into the shape LiveMatchRow already understands
 export const toLiveMatch = (m: FootballMatch, market: MarketId): LiveMatch => {
   const home = teams[m.home]
   const away = teams[m.away]
@@ -297,7 +289,6 @@ export const getFootballMatchById = (id: number) => {
   return undefined
 }
 
-// NEW: find a football match by its team names
 export const findFootballMatchByTeams = (homeName: string, awayName: string) => {
   for (const competition of competitions) {
     const match = competition.matches.find(

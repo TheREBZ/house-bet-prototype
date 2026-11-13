@@ -89,7 +89,6 @@
     border-radius: var(--radius-lg);
   }
   
-  /* the "+115" column and "Show all" link don't exist on small screens */
   @media (max-width: 900px) {
     .skeleton-more {
       display: none;
